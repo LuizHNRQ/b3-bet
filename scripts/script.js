@@ -53,6 +53,6 @@ console.log(stockObj[randomStockNum(0, 417)][0]);
 
 let randomStock = stockObj[randomStockNum(0, 417)][0];
 console.log("AÇAO PASSADA POR PARAMTRO:", randomStock);
-requestB3(randomStock);
+//requestB3(randomStock);
 
 //^bvsp = BOVESPA
