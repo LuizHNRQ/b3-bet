@@ -24,7 +24,20 @@ async function requestB3(stockCode) {
 
   arrayKeys.map(e => {
     stockLabels.push(e);
-  })
+  });
+
+  console.log("teste de valores");
+  console.log((data["Time Series (Daily)"]["2019-12-02"]["1. open"]));
+
+  arrayKeys.map(e => {
+    //console.log(e);
+    //console.log((data["Time Series (Daily)"][`${e}`]["1. open"]));
+    stockPrice.push(data["Time Series (Daily)"][`${e}`]["1. open"]);
+
+  });
+
+
+
 
 
   //console.log('data aqui =', data["Time Series (Daily)"]["2019-11-28"]);

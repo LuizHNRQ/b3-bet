@@ -1,5 +1,6 @@
 let ctx = document.getElementById('myChart').getContext('2d');
 const stockLabels = [];
+const stockPrice = [];
 
 console.log('console no chart = ', stockLabels);
 let stocksChart = new Chart(ctx, {
@@ -8,14 +9,7 @@ let stocksChart = new Chart(ctx, {
     labels: stockLabels,
     datasets: [{
       label: 'Dinheiro',
-      data: [
-        500,
-        121,
-        345,
-        353,
-        363,
-        555
-      ]
+      data: stockPrice
     }]
   },
   options: {}
