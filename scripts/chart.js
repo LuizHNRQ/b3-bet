@@ -1,8 +1,4 @@
 let ctx = document.getElementById('myChart').getContext('2d');
-//const stockLabels = [];
-//const stockPrice = [];
-
-//console.log('console no chart = ', stockLabels);
 
 function createChart(stockLabels = [], stockPrice = []) {
   //console.log(stockLabels, stockPrice);
