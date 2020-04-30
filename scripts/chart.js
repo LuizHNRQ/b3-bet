@@ -8,7 +8,7 @@ let stocksChart = new Chart(ctx, {
   data: {
     labels: stockLabels,
     datasets: [{
-      label: 'Dinheiro',
+      label: 'R$',
       data: stockPrice
     }]
   },

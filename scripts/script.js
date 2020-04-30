@@ -20,6 +20,10 @@ async function requestB3(stockCode) {
   let arrayKeys = Object.keys(data["Time Series (Daily)"]);
   console.log('array das keys = ', arrayKeys);
 
+  arrayKeys.reverse();
+
+  console.log('array das keys = ', arrayKeys);
+
   //stockLabels.push(Object.keys(data["Time Series (Daily)"]));
 
   arrayKeys.map(e => {
