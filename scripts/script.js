@@ -6,23 +6,28 @@ console.log("test api");
 
 //criar 5 fetchs com cada um usando uma Key diferente
 async function requestB3(stockCode) {
+  const stockLabels = [];
+  const stockPrice = [];
+
   const res = await fetch(
-    /*`https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=${stockCode}.SA&outputsize=compact&apikey=WTPIMEDHPNGBKRF5`
+    `https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=${stockCode}.SA&outputsize=compact&apikey=WTPIMEDHPNGBKRF5`
   );
-      const res = await fetch(*/
-    `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stockCode}.SA&outputsize=compact&apikey=WTPIMEDHPNGBKRF5`);
+  /*
+        const res = await fetch(
+      `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stockCode}.SA&outputsize=compact&apikey=WTPIMEDHPNGBKRF5`);*/
   const data = await res.json();
+
+
 
   console.log('Resultado da requisição =', data);
 
   console.log(typeof (data));
 
-  let arrayKeys = Object.keys(data["Time Series (Daily)"]);
-  console.log('array das keys = ', arrayKeys);
+  let arrayKeys = Object.keys(data["Monthly Adjusted Time Series"]);
 
-  arrayKeys.reverse();
-
-  console.log('array das keys = ', arrayKeys);
+  //console.log('array das keys = ', arrayKeys); //Original array
+  arrayKeys.reverse(); //Reverse the array to show in cronological order
+  //console.log('array das keys = ', arrayKeys); //Reversed array
 
   //stockLabels.push(Object.keys(data["Time Series (Daily)"]));
 
@@ -31,12 +36,13 @@ async function requestB3(stockCode) {
   });
 
   console.log("teste de valores");
-  console.log((data["Time Series (Daily)"]["2019-12-02"]["1. open"]));
+  //console.log((data["Time Series (Daily)"]["2019-12-02"]["1. open"]));
+  console.log('mes', data["Monthly Adjusted Time Series"]);
 
   arrayKeys.map(e => {
     //console.log(e);
     //console.log((data["Time Series (Daily)"][`${e}`]["1. open"]));
-    stockPrice.push(data["Time Series (Daily)"][`${e}`]["1. open"]);
+    stockPrice.push(data["Monthly Adjusted Time Series"][`${e}`]["1. open"]);
 
   });
 
@@ -48,9 +54,11 @@ async function requestB3(stockCode) {
   //stockLabels.push(data["Time Series (Daily)"]);
   //stockLabels.push('oi', 'eae', 'deu', 'certo', 'aqui');
 
-  console.log('Abertura=', data["Time Series (Daily)"]["2019-12-23"]["1. open"]);
+  //console.log('Abertura=', data["Time Series (Daily)"]["2019-12-23"]["1. open"]);
 
   console.log("ate aqui");
+
+  createChart(stockLabels, stockPrice);
 }
 
 // generate a random stock
@@ -79,7 +87,8 @@ console.log(randomStockNum(0, 417));
 console.log(randomStockNum(0, 417));
 console.log(randomStockNum(0, 417));
 console.log(randomStockNum(0, 417));/*
-
+*/
+/*
 console.log(stockObj[randomStockNum(0, 417)][0]);
 console.log(stockObj[randomStockNum(0, 417)][0]);
 console.log(stockObj[randomStockNum(0, 417)][0]);
