@@ -1,8 +1,11 @@
 let ctx = document.getElementById('myChart').getContext('2d');
+const stockLabels = [];
+
+console.log('console no chart = ', stockLabels);
 let stocksChart = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: ['segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado'],
+    labels: stockLabels,
     datasets: [{
       label: 'Dinheiro',
       data: [
