@@ -13,7 +13,42 @@ async function requestB3(stockCode) {
     `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stockCode}.SA&outputsize=compact&apikey=WTPIMEDHPNGBKRF5`);
   const data = await res.json();
 
-  console.log(data);
+  console.log('Resultado da requisição =', data);
+
+  console.log(typeof (data));
+
+  let arrayKeys = Object.keys(data["Time Series (Daily)"]);
+  console.log('array das keys = ', arrayKeys);
+
+  arrayKeys.reverse();
+
+  console.log('array das keys = ', arrayKeys);
+
+  //stockLabels.push(Object.keys(data["Time Series (Daily)"]));
+
+  arrayKeys.map(e => {
+    stockLabels.push(e);
+  });
+
+  console.log("teste de valores");
+  console.log((data["Time Series (Daily)"]["2019-12-02"]["1. open"]));
+
+  arrayKeys.map(e => {
+    //console.log(e);
+    //console.log((data["Time Series (Daily)"][`${e}`]["1. open"]));
+    stockPrice.push(data["Time Series (Daily)"][`${e}`]["1. open"]);
+
+  });
+
+
+
+
+
+  //console.log('data aqui =', data["Time Series (Daily)"]["2019-11-28"]);
+  //stockLabels.push(data["Time Series (Daily)"]);
+  //stockLabels.push('oi', 'eae', 'deu', 'certo', 'aqui');
+
+  console.log('Abertura=', data["Time Series (Daily)"]["2019-12-23"]["1. open"]);
 
   console.log("ate aqui");
 }
@@ -38,21 +73,21 @@ stocksList.forEach(e => console.log(e));
 */
 //console.log(stockObj);
 //stockObj.forEach(e => console.log(e[0]));
+/*
+console.log(randomStockNum(0, 417));
+console.log(randomStockNum(0, 417));
+console.log(randomStockNum(0, 417));
+console.log(randomStockNum(0, 417));
+console.log(randomStockNum(0, 417));/*
 
-console.log(randomStockNum(0, 417));
-console.log(randomStockNum(0, 417));
-console.log(randomStockNum(0, 417));
-console.log(randomStockNum(0, 417));
-console.log(randomStockNum(0, 417));
-
 console.log(stockObj[randomStockNum(0, 417)][0]);
 console.log(stockObj[randomStockNum(0, 417)][0]);
 console.log(stockObj[randomStockNum(0, 417)][0]);
 console.log(stockObj[randomStockNum(0, 417)][0]);
-console.log(stockObj[randomStockNum(0, 417)][0]);
+console.log(stockObj[randomStockNum(0, 417)][0]);*/
 
 let randomStock = stockObj[randomStockNum(0, 417)][0];
 console.log("AÇAO PASSADA POR PARAMTRO:", randomStock);
-//requestB3(randomStock);
-
+const resultado = requestB3(randomStock);
+//stockLabels.push()
 //^bvsp = BOVESPA
