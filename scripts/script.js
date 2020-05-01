@@ -1,93 +1,100 @@
 const stockCode = document.querySelector("#stockCode");
 const btnSubmit = document.querySelector("#btn");
+const showSixMonths = document.querySelector("#sixMonths");
 
-console.log("test api");
+//Global Variables
+const predefinedInvest = 1000;
+//let lastSixMonths; //Array of the Last six month of data
 
 
 //criar 5 fetchs com cada um usando uma Key diferente
-async function requestB3(stockCode) {
+async function requestB3(randomStock) {
+  const stockCode = randomStock[0];
+  //Get ONLY the stock CODE
+  const stocksLabelDate = [];
+  const stockPrice = [];
+
   const res = await fetch(
-    /*`https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=${stockCode}.SA&outputsize=compact&apikey=WTPIMEDHPNGBKRF5`
+    `https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=${stockCode}.SA&outputsize=compact&apikey=WTPIMEDHPNGBKRF5`
   );
-      const res = await fetch(*/
-    `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stockCode}.SA&outputsize=compact&apikey=WTPIMEDHPNGBKRF5`);
   const data = await res.json();
+  console.log(data);
 
-  console.log('Resultado da requisição =', data);
+  //console.log('Resultado da requisição =', data);
 
-  console.log(typeof (data));
+  let arrayKeys = Object.keys(data["Monthly Adjusted Time Series"]);
+  arrayKeys.reverse(); //Reverse the array to show in cronological order
 
-  let arrayKeys = Object.keys(data["Time Series (Daily)"]);
-  console.log('array das keys = ', arrayKeys);
+  maxNumArray = arrayKeys.length; //get the number of months of the stocks in B3
+  let lastSixMonths = arrayKeys.slice(maxNumArray - 6); //selelct last 6 months
 
-  arrayKeys.reverse();
-
-  console.log('array das keys = ', arrayKeys);
-
-  //stockLabels.push(Object.keys(data["Time Series (Daily)"]));
-
-  arrayKeys.map(e => {
-    stockLabels.push(e);
+  //Insert Date to the Chart
+  lastSixMonths.map((e) => {
+    stocksLabelDate.push(e);
   });
 
-  console.log("teste de valores");
-  console.log((data["Time Series (Daily)"]["2019-12-02"]["1. open"]));
-
-  arrayKeys.map(e => {
-    //console.log(e);
-    //console.log((data["Time Series (Daily)"][`${e}`]["1. open"]));
-    stockPrice.push(data["Time Series (Daily)"][`${e}`]["1. open"]);
-
+  //Insert Price to the Chart
+  lastSixMonths.map((e) => {
+    stockPrice.push(data["Monthly Adjusted Time Series"][`${e}`]["1. open"]);
   });
 
-
-
-
-
-  //console.log('data aqui =', data["Time Series (Daily)"]["2019-11-28"]);
-  //stockLabels.push(data["Time Series (Daily)"]);
-  //stockLabels.push('oi', 'eae', 'deu', 'certo', 'aqui');
-
-  console.log('Abertura=', data["Time Series (Daily)"]["2019-12-23"]["1. open"]);
-
-  console.log("ate aqui");
+  createChart(stocksLabelDate, stockPrice); //Exib new Chart filled with the request data
+  calcSixMonths(lastSixMonths, stockPrice, randomStock);
 }
 
-// generate a random stock
+// -----> FUNCTIONS <-----
 
+// generate a random stock
 function randomStockNum(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-//Add Event Listner
+//calculate the Result of Six Months of Investment
+function calcSixMonths(lastSixMonths, stockPrice, stock) {
+  let initialDate = lastSixMonths.slice(0, 1); //selelct ONLY the first month
 
+  let initialInvest = predefinedInvest;
+  let stocksBuyedInitialInvest = initialInvest / stockPrice[0];
+  let resultInvest = stocksBuyedInitialInvest * stockPrice[5];
+  let difInvest = resultInvest - initialInvest;
+
+  let changeSpan = '<span>';
+  if (difInvest >= 0) {
+    changeSpan = '<span class="positive">';
+  } else {
+    changeSpan = '<span class="negative">';
+  }
+
+  //show result in HTML
+  showSixMonths.innerHTML =
+    `
+    6 Meses atrás(${initialDate}) em
+    <div class="tooltip">${stock[0]}<span class="tooltiptext">${stock[1]}<span></div>,
+     teria rendido = R$${resultInvest.toFixed(2)}
+     (${changeSpan}R$${difInvest.toFixed(2)}</span>)
+     `;
+
+}
+
+
+// -----> EVENT LISTNER <-----
 btnSubmit.addEventListener("click", (e) => {
   e.preventDefault();
+
   console.log(stockCode.value);
-  requestB3(stockCode.value);
+
+  stockObj.map(obj => {
+
+    if (obj[0] === (stockCode.value).toUpperCase()) {
+      requestB3(obj);
+    }
+
+  })
+
 });
-/*
-console.log(stocksList);
 
-stocksList.forEach(e => console.log(e));
-*/
-//console.log(stockObj);
-//stockObj.forEach(e => console.log(e[0]));
-/*
-console.log(randomStockNum(0, 417));
-console.log(randomStockNum(0, 417));
-console.log(randomStockNum(0, 417));
-console.log(randomStockNum(0, 417));
-console.log(randomStockNum(0, 417));/*
+//stockObj[randomStockNum(0, 417)][0]); <---- Generate a random stock CODE
 
-console.log(stockObj[randomStockNum(0, 417)][0]);
-console.log(stockObj[randomStockNum(0, 417)][0]);
-console.log(stockObj[randomStockNum(0, 417)][0]);
-console.log(stockObj[randomStockNum(0, 417)][0]);
-console.log(stockObj[randomStockNum(0, 417)][0]);*/
-
-let randomStock = stockObj[randomStockNum(0, 417)][0];
-console.log("AÇAO PASSADA POR PARAMTRO:", randomStock);
+let randomStock = stockObj[randomStockNum(0, 417)];
+console.log("AÇAO PASSADA POR PARAMETRO:", randomStock[1]);
 const resultado = requestB3(randomStock);
-//stockLabels.push()
-//^bvsp = BOVESPA
