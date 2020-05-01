@@ -8,7 +8,9 @@ const predefinedInvest = 1000;
 
 
 //criar 5 fetchs com cada um usando uma Key diferente
-async function requestB3(stockCode) {
+async function requestB3(randomStock) {
+  const stockCode = randomStock[0];
+  //Get ONLY the stock CODE
   const stocksLabelDate = [];
   const stockPrice = [];
 
@@ -37,7 +39,7 @@ async function requestB3(stockCode) {
   });
 
   createChart(stocksLabelDate, stockPrice); //Exib new Chart filled with the request data
-  calcSixMonths(lastSixMonths, stockPrice);
+  calcSixMonths(lastSixMonths, stockPrice, randomStock);
 }
 
 // -----> FUNCTIONS <-----
@@ -48,7 +50,7 @@ function randomStockNum(min, max) {
 }
 
 //calculate the Result of Six Months of Investment
-function calcSixMonths(lastSixMonths, stockPrice) {
+function calcSixMonths(lastSixMonths, stockPrice, stock) {
   let initialDate = lastSixMonths.slice(0, 1); //selelct ONLY the first month
 
   let initialInvest = predefinedInvest;
@@ -56,16 +58,22 @@ function calcSixMonths(lastSixMonths, stockPrice) {
   let resultInvest = stocksBuyedInitialInvest * stockPrice[5];
   let difInvest = resultInvest - initialInvest;
 
-  showSixMonths.innerHTML =
-    `6 Meses atrás(${initialDate}) em ${randomStock},
-     teria rendido = ${resultInvest}(${difInvest})`;
+  let changeSpan = '<span>';
+  if (difInvest >= 0) {
+    changeSpan = '<span class="positive">';
+  } else {
+    changeSpan = '<span class="negative">';
+  }
 
-  // DEBUG
-  /*
-  console.log(stocksBuyedInitialInvest);
-  console.log(stockPrice[5]);
-  console.log(stockPrice[0]);
-  */
+  //show result in HTML
+  showSixMonths.innerHTML =
+    `
+    6 Meses atrás(${initialDate}) em
+    <div class="tooltip">${stock[0]}<span class="tooltiptext">${stock[1]}<span></div>,
+     teria rendido = R$${resultInvest.toFixed(2)}
+     (${changeSpan}R$${difInvest.toFixed(2)}</span>)
+     `;
+
 }
 
 
@@ -73,11 +81,13 @@ function calcSixMonths(lastSixMonths, stockPrice) {
 btnSubmit.addEventListener("click", (e) => {
   e.preventDefault();
   console.log(stockCode.value);
-  requestB3(stockCode.value);
+  requestB3({
+    0: stockCode.value
+  });
 });
 
 //stockObj[randomStockNum(0, 417)][0]); <---- Generate a random stock CODE
 
-let randomStock = stockObj[randomStockNum(0, 417)][0];
-console.log("AÇAO PASSADA POR PARAMTRO:", randomStock);
+let randomStock = stockObj[randomStockNum(0, 417)];
+console.log("AÇAO PASSADA POR PARAMETRO:", randomStock[1]);
 const resultado = requestB3(randomStock);

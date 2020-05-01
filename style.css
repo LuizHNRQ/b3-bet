@@ -1,0 +1,50 @@
+:root {
+  --tooltip-width: 200px;
+}
+
+canvas {
+  max-width: 1000px;
+  max-height: 600px;
+}
+
+.negative {
+  color: red;
+}
+
+.positive {
+  color: rgb(54, 184, 54);
+}
+
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: var(--tooltip-width);
+  font-size: 14px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 50%;
+  margin-left: -100px;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
