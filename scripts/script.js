@@ -80,10 +80,17 @@ function calcSixMonths(lastSixMonths, stockPrice, stock) {
 // -----> EVENT LISTNER <-----
 btnSubmit.addEventListener("click", (e) => {
   e.preventDefault();
+
   console.log(stockCode.value);
-  requestB3({
-    0: stockCode.value
-  });
+
+  stockObj.map(obj => {
+
+    if (obj[0] === (stockCode.value).toUpperCase()) {
+      requestB3(obj);
+    }
+
+  })
+
 });
 
 //stockObj[randomStockNum(0, 417)][0]); <---- Generate a random stock CODE
