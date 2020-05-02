@@ -9,18 +9,16 @@ const predefinedInvest = 1000;
 
 //criar 5 fetchs com cada um usando uma Key diferente
 async function requestB3(randomStock) {
-  const stockCode = randomStock[0];
-  //Get ONLY the stock CODE
+  const stockCode = randomStock[0]; //Get ONLY the stock CODE
   const stocksLabelDate = [];
   const stockPrice = [];
 
+  //Request the Alpha Vantege API
   const res = await fetch(
     `https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=${stockCode}.SA&outputsize=compact&apikey=WTPIMEDHPNGBKRF5`
   );
   const data = await res.json();
-  console.log(data);
-
-  //console.log('Resultado da requisição =', data);
+  console.log(data); //LOG the request
 
   let arrayKeys = Object.keys(data["Monthly Adjusted Time Series"]);
   arrayKeys.reverse(); //Reverse the array to show in cronological order
@@ -38,7 +36,7 @@ async function requestB3(randomStock) {
     stockPrice.push(data["Monthly Adjusted Time Series"][`${e}`]["1. open"]);
   });
 
-  createChart(stocksLabelDate, stockPrice); //Exib new Chart filled with the request data
+  createChart(stocksLabelDate, stockPrice, stockCode); //Exib new Chart filled with the request data
   calcSixMonths(lastSixMonths, stockPrice, randomStock);
 }
 
@@ -68,8 +66,8 @@ function calcSixMonths(lastSixMonths, stockPrice, stock) {
   //show result in HTML
   showSixMonths.innerHTML =
     `
-    6 Meses atrás(${initialDate}) em
-    <div class="tooltip">${stock[0]}<span class="tooltiptext">${stock[1]}<span></div>,
+    6 Meses atrás(${initialDate})R$1000,00 em
+    <div class="tooltip">${stock[0]}<span class="tooltiptext">${stock[1].slice(3)}<span></div>,
      teria rendido = R$${resultInvest.toFixed(2)}
      (${changeSpan}R$${difInvest.toFixed(2)}</span>)
      `;
@@ -81,20 +79,18 @@ function calcSixMonths(lastSixMonths, stockPrice, stock) {
 btnSubmit.addEventListener("click", (e) => {
   e.preventDefault();
 
-  console.log(stockCode.value);
-
+  //Search typed Array in Const.js to return the Object
   stockObj.map(obj => {
-
     if (obj[0] === (stockCode.value).toUpperCase()) {
       requestB3(obj);
     }
-
   })
 
 });
 
 //stockObj[randomStockNum(0, 417)][0]); <---- Generate a random stock CODE
 
+// -----> START CODE <-----
 let randomStock = stockObj[randomStockNum(0, 417)];
 console.log("AÇAO PASSADA POR PARAMETRO:", randomStock[1]);
 const resultado = requestB3(randomStock);
