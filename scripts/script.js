@@ -3,19 +3,42 @@ const btnSubmit = document.querySelector("#btn");
 const showSixMonths = document.querySelector("#sixMonths");
 
 //Global Variables
-const predefinedInvest = 1000;
-//let lastSixMonths; //Array of the Last six month of data
+const predefinedInvest = 1000; //number of money invest in each stock
+const num_stocks = 2; //number of stocks displayed
+const randomStockArray = []; //Create an array of random stocks
+const apiKeysArray = ['WTPIMEDHPNGBKRF5', '1147VI6WERT7B62C', 'TUH5W35OW6WPADXO', 'EZBDRRFVQNR2B6PM', 'Q51Q6EX0QC4L56YY'];
+
+//num_stocks = 5
+for (let i = 0; i < num_stocks; i++) {
+  randomStockArray[i] = stockObj[randomStockNum(0, 417)];
+};
+//LOG all arrays
+randomStockArray.forEach(e => {
+  console.log(e);
+});
+
+function fillMultipleData() {
+
+}
+/*randomStockArray.forEach(stockCodeName => {
+  requestB3(stockCodeName, apiKeysArray[2]);
+});*/
+
+for (let i = 0; i < num_stocks; i++) {
+  requestB3(randomStockArray[i], apiKeysArray[i]); // for each stock user different apiKey
+}
 
 
 //criar 5 fetchs com cada um usando uma Key diferente
-async function requestB3(randomStock) {
+async function requestB3(randomStock, apiKey) {
+  //console.log(randomStock); DATA
   const stockCode = randomStock[0]; //Get ONLY the stock CODE
   const stocksLabelDate = [];
   const stockPrice = [];
 
   //Request the Alpha Vantege API
   const res = await fetch(
-    `https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=${stockCode}.SA&outputsize=compact&apikey=WTPIMEDHPNGBKRF5`
+    `https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=${stockCode}.SA&outputsize=compact&apikey=${apiKey}`
   );
   const data = await res.json();
   console.log(data); //LOG the request
@@ -31,13 +54,15 @@ async function requestB3(randomStock) {
     stocksLabelDate.push(e);
   });
 
+  createChart(stocksLabelDate, '', stockCode);
+
   //Insert Price to the Chart
   lastSixMonths.map((e) => {
     stockPrice.push(data["Monthly Adjusted Time Series"][`${e}`]["1. open"]);
   });
 
-  createChart(stocksLabelDate, stockPrice, stockCode); //Exib new Chart filled with the request data
-  calcSixMonths(lastSixMonths, stockPrice, randomStock);
+  //createChart(stocksLabelDate, stockPrice, stockCode); //Exib new Chart filled with the request data
+  //calcSixMonths(lastSixMonths, stockPrice, randomStock);
 }
 
 // -----> FUNCTIONS <-----
@@ -91,6 +116,10 @@ btnSubmit.addEventListener("click", (e) => {
 //stockObj[randomStockNum(0, 417)][0]); <---- Generate a random stock CODE
 
 // -----> START CODE <-----
-let randomStock = stockObj[randomStockNum(0, 417)];
-console.log("AÇAO PASSADA POR PARAMETRO:", randomStock[1]);
-const resultado = requestB3(randomStock);
+
+
+//let randomStock = stockObj[randomStockNum(0, 417)];
+//console.log("AÇAO PASSADA POR PARAMETRO:", randomStock[1]);
+
+//requestB3(randomStock);
+//requestB3(randomStockArray[0], apiKeysArray[2]);
