@@ -7,6 +7,7 @@ const predefinedInvest = 1000; //number of money invest in each stock
 const num_stocks = 2; //number of stocks displayed
 const randomStockArray = []; //Create an array of random stocks
 const apiKeysArray = ['WTPIMEDHPNGBKRF5', '1147VI6WERT7B62C', 'TUH5W35OW6WPADXO', 'EZBDRRFVQNR2B6PM', 'Q51Q6EX0QC4L56YY'];
+let indexA = 0;
 
 //num_stocks = 5
 for (let i = 0; i < num_stocks; i++) {
@@ -20,17 +21,19 @@ randomStockArray.forEach(e => {
 function fillMultipleData() {
 
 }
-/*randomStockArray.forEach(stockCodeName => {
-  requestB3(stockCodeName, apiKeysArray[2]);
-});*/
+
+
+let dateDisplay = [];
+const priceArray = [];
 
 for (let i = 0; i < num_stocks; i++) {
-  requestB3(randomStockArray[i], apiKeysArray[i]); // for each stock user different apiKey
+  requestB3(randomStockArray[i], apiKeysArray[i], i); // for each stock user different apiKey
 }
 
 
+
 //criar 5 fetchs com cada um usando uma Key diferente
-async function requestB3(randomStock, apiKey) {
+async function requestB3(randomStock, apiKey, indexA) {
   //console.log(randomStock); DATA
   const stockCode = randomStock[0]; //Get ONLY the stock CODE
   const stocksLabelDate = [];
@@ -54,6 +57,11 @@ async function requestB3(randomStock, apiKey) {
     stocksLabelDate.push(e);
   });
 
+  dateDisplay = Object.assign(lastSixMonths, dateDisplay);
+  console.log('.....>', dateDisplay);
+  console.log(stocksLabelDate);
+  console.log(typeof (stocksLabelDate));
+
   createChart(stocksLabelDate, '', stockCode);
 
   //Insert Price to the Chart
@@ -61,7 +69,9 @@ async function requestB3(randomStock, apiKey) {
     stockPrice.push(data["Monthly Adjusted Time Series"][`${e}`]["1. open"]);
   });
 
-  //createChart(stocksLabelDate, stockPrice, stockCode); //Exib new Chart filled with the request data
+  priceArray[indexA] = stockPrice; //global
+
+  createChart(stocksLabelDate, stockPrice, stockCode, priceArray); //Exib new Chart filled with the request data
   //calcSixMonths(lastSixMonths, stockPrice, randomStock);
 }
 
@@ -123,3 +133,5 @@ btnSubmit.addEventListener("click", (e) => {
 
 //requestB3(randomStock);
 //requestB3(randomStockArray[0], apiKeysArray[2]);
+
+console.log('objeto de preco', priceArray);
