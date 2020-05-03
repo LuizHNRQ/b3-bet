@@ -1,7 +1,9 @@
 let ctx = document.getElementById('myChart').getContext('2d');
 
 function createChart(stockLabels = [], stockPrice = [], stockCode) {
-  let stocksChart = new Chart(ctx, {
+  if (window.myCharts != undefined)
+    window.myCharts.destroy();
+  window.myCharts = new Chart(ctx, {
     type: 'line',
     data: {
       labels: stockLabels,
