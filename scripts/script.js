@@ -4,7 +4,7 @@ const showSixMonths = document.querySelector("#sixMonths");
 
 //Global Variables
 const predefinedInvest = 1000; //number of money invest in each stock
-const num_stocks = 2; //number of stocks displayed
+const num_stocks = 5; //number of stocks displayed
 const randomStockArray = []; //Create an array of random stocks
 const apiKeysArray = ['WTPIMEDHPNGBKRF5', '1147VI6WERT7B62C', 'TUH5W35OW6WPADXO', 'EZBDRRFVQNR2B6PM', 'Q51Q6EX0QC4L56YY'];
 let indexA = 0;
@@ -30,8 +30,6 @@ for (let i = 0; i < num_stocks; i++) {
   requestB3(randomStockArray[i], apiKeysArray[i], i); // for each stock user different apiKey
 }
 
-
-
 //criar 5 fetchs com cada um usando uma Key diferente
 async function requestB3(randomStock, apiKey, indexA) {
   //console.log(randomStock); DATA
@@ -45,6 +43,7 @@ async function requestB3(randomStock, apiKey, indexA) {
   );
   const data = await res.json();
   console.log(data); //LOG the request
+  console.log('key used =', apiKey);
 
   let arrayKeys = Object.keys(data["Monthly Adjusted Time Series"]);
   arrayKeys.reverse(); //Reverse the array to show in cronological order
@@ -62,7 +61,7 @@ async function requestB3(randomStock, apiKey, indexA) {
   console.log(stocksLabelDate);
   console.log(typeof (stocksLabelDate));
 
-  createChart(stocksLabelDate, '', stockCode);
+  createChart(stocksLabelDate, '', stockCode, '');
 
   //Insert Price to the Chart
   lastSixMonths.map((e) => {
@@ -71,8 +70,13 @@ async function requestB3(randomStock, apiKey, indexA) {
 
   priceArray[indexA] = stockPrice; //global
 
-  createChart(stocksLabelDate, stockPrice, stockCode, priceArray); //Exib new Chart filled with the request data
+  console.log('ra', randomStockArray);
+
+  //createChart(stocksLabelDate, stockPrice, randomStockArray, priceArray); //Exib new Chart filled with the request data
   //calcSixMonths(lastSixMonths, stockPrice, randomStock);
+  console.log('random stock array =', randomStockArray);
+  console.log(typeof (randomStockArray));
+  createChart(stocksLabelDate, stockPrice, randomStockArray, priceArray);
 }
 
 // -----> FUNCTIONS <-----
