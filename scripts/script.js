@@ -1,3 +1,4 @@
+
 const stockCode = document.querySelector("#stockCode");
 const btnSubmit = document.querySelector("#btn");
 const showSixMonths = document.querySelector("#sixMonths");
@@ -116,3 +117,5 @@ let randomStock = stockObj[randomStockNum(0, 417)];
 console.log("AÇAO PASSADA POR PARAMETRO:", randomStock[1]);
 const resultado = requestB3(randomStock);
 console.log("Gambi");
+
+
