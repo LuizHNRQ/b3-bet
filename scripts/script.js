@@ -115,3 +115,4 @@ btnSubmit.addEventListener("click", (e) => {
 let randomStock = stockObj[randomStockNum(0, 417)];
 console.log("AÇAO PASSADA POR PARAMETRO:", randomStock[1]);
 const resultado = requestB3(randomStock);
+console.log("Gambi");
