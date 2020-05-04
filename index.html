@@ -12,6 +12,11 @@
 
   <canvas id="myChart"></canvas>
 
+  <div class="slidecontainer">
+    <input type="range" min="2" max="36" value="24" class="slider" id="myRange">
+    <p>Semanas: <span id="demo"></span></p>
+  </div>
+
   <h2>Teste API - Consulta por Ação</h2>
   <form class="teste">
     <label for="stockCode">Stock Code</label>
@@ -23,7 +28,6 @@
     <h2 id="sixMonths"></h2>
   </div>
 
-  <span class="oi"></span>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <script src="/b3-bet/scripts/chart.js"></script>
