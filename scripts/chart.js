@@ -1,20 +1,21 @@
-let ctx = document.getElementById('myChart').getContext('2d');
+let ctx = document.getElementById("myChart").getContext("2d");
 
 function createChart(stockLabels = [], stockPrice = [], stockCode) {
-  if (window.myCharts != undefined)
-    window.myCharts.destroy();
+  if (window.myCharts != undefined) window.myCharts.destroy();
   window.myCharts = new Chart(ctx, {
-    type: 'line',
+    type: "line",
     data: {
       labels: stockLabels,
-      datasets: [{
-        label: `${stockCode}/R$`,
-        data: stockPrice
-      }]
+      datasets: [
+        {
+          label: `${stockCode}/R$`,
+          data: stockPrice,
+        },
+      ],
     },
-    options: {}
+    options: {},
   });
-
 }
 
 createChart();
+console.log("continues");
