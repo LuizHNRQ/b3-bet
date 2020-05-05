@@ -82,3 +82,9 @@ canvas {
   background: #4CAF50;
   cursor: pointer;
 }
+
+.displayChart {
+  max-width: 800px;
+  height: 600px;
+
+}
