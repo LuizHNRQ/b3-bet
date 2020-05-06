@@ -25,8 +25,9 @@ async function requestB3(randomStock) {
   let stocksLabelDate = [];
   let stockPrice = [];
 
-  //*********-1 façer laço for each e dentro um try catch com todas api's */
+  //*********-1 fazer laço for each e dentro um try catch com todas api's */
   //*********-2  Subir no heroku utilizando variavel de ambiente para esconder key */
+  //*********-3 adicionar loading para api || esta demorando muito */
 
   //Request the Alpha Vantege API
   const res = await fetch(

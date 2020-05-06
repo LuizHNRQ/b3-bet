@@ -1,3 +1,9 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+
 canvas {
   max-width: 1000px;
   max-height: 600px;
@@ -84,7 +90,31 @@ canvas {
 }
 
 .displayChart {
-  max-width: 800px;
+  width: 600px;
   height: 600px;
+
+}
+
+/* Main styling  */
+
+body {
+  background-color: #212121;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #121212;
+  color: white;
+}
+
+.container {
+  margin: 0 auto;
+  width: 1200px;
+}
+
+.chart-and-info {
+  display: flex;
 
 }

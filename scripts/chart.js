@@ -17,6 +17,12 @@ function createChart(stockLabels = [], stockPrice = [], stockCode) {
       ],
     },
     options: {
+      legend: {
+        labels: {
+          // This more specific font property overrides the global property
+          fontColor: 'white',
+        },
+      },
       scales: {
         yAxes: [
           {
