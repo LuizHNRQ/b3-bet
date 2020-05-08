@@ -1,3 +1,11 @@
+@import url('https://fonts.googleapis.com/css?family=Gudea|Montserrat|Spartan&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+
 canvas {
   max-width: 1000px;
   max-height: 600px;
@@ -81,4 +89,51 @@ canvas {
   border-radius: 50%;
   background: #4CAF50;
   cursor: pointer;
+}
+
+.displayChart {
+  width: 600px;
+  height: 600px;
+
+}
+
+/* Main styling  */
+
+body {
+  background-color: #212121;
+  color: white;
+  /* font-family: 'Spartan'; */
+  font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+  background-image: linear-gradient(#535353, #121212 36%);
+}
+
+
+header {
+  background-color: #121212;
+  color: white;
+}
+
+header .container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.container {
+  margin: 0 auto;
+  width: 1200px;
+}
+
+.chart-and-info {
+  display: flex;
+
+}
+
+.initial {
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 38px;
+
 }

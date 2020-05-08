@@ -1,10 +1,9 @@
-
-const stockCode = document.querySelector("#stockCode");
-const btnSubmit = document.querySelector("#btn");
-const showSixMonths = document.querySelector("#sixMonths");
+const stockCode = document.querySelector('#stockCode');
+const btnSubmit = document.querySelector('#btn');
+const showSixMonths = document.querySelector('#sixMonths');
 //slider components
-const slider = document.querySelector("#myRange");
-const outputSlider = document.querySelector("#demo");
+const slider = document.querySelector('#myRange');
+const outputSlider = document.querySelector('#demo');
 //---------------------DOM---------------------------------
 
 //Global Variables
@@ -26,6 +25,10 @@ async function requestB3(randomStock) {
   let stocksLabelDate = [];
   let stockPrice = [];
 
+  //*********-1 fazer laço for each e dentro um try catch com todas api's */
+  //*********-2  Subir no heroku utilizando variavel de ambiente para esconder key */
+  //*********-3 adicionar loading para api || esta demorando muito */
+
   //Request the Alpha Vantege API
   const res = await fetch(
     `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY_ADJUSTED&symbol=${stockCode}.SA&outputsize=compact&apikey=WTPIMEDHPNGBKRF5`
@@ -33,7 +36,7 @@ async function requestB3(randomStock) {
   const data = await res.json();
   console.log(data); //LOG the request
 
-  let arrayKeys = Object.keys(data["Weekly Adjusted Time Series"]);
+  let arrayKeys = Object.keys(data['Weekly Adjusted Time Series']);
   arrayKeys.reverse(); //Reverse the array to show in cronological order
 
   slider.oninput = function () {
@@ -50,12 +53,16 @@ async function requestB3(randomStock) {
 
     //Insert Date to the Chart
     lastSixMonths.map((e) => {
-      stocksLabelDate.push(e);
+      console.log(e);
+      console.log(typeof e);
+      const formatDateArray = e.split('-');
+      const formatedDate = `${formatDateArray[2]}/${formatDateArray[1]}/${formatDateArray[0]}`;
+      stocksLabelDate.push(formatedDate);
     });
 
     //Insert Price to the Chart
     lastSixMonths.map((e) => {
-      stockPrice.push(data["Weekly Adjusted Time Series"][`${e}`]["1. open"]);
+      stockPrice.push(data['Weekly Adjusted Time Series'][`${e}`]['1. open']);
     });
 
     createChart(stocksLabelDate, stockPrice, stockCode); //Exib new Chart filled with the request data
@@ -80,7 +87,7 @@ function calcSixMonths(lastSixMonths, stockPrice, stock) {
   let resultInvest = stocksBuyedInitialInvest * stockPrice[weeks - 1]; // -1 = base 0 array
   let difInvest = resultInvest - initialInvest;
 
-  let changeSpan = "<span>";
+  let changeSpan = '<span>';
   if (difInvest >= 0) {
     changeSpan = '<span class="positive">';
   } else {
@@ -89,17 +96,20 @@ function calcSixMonths(lastSixMonths, stockPrice, stock) {
 
   //show result in HTML
   showSixMonths.innerHTML = `
-    ${weeks} semanas atrás(${initialDate})R$1000,00 em
+     R$1000,00  investidos em
     <div class="tooltip">${stock[0]}<span class="tooltiptext">${stock[1].slice(
     3
-  )}<span></div>,
-     teria rendido = R$${resultInvest.toFixed(2)}
-     (${changeSpan}R$${difInvest.toFixed(2)}</span>)
+  )}<span></div>
+  , há <div class="tooltip">${weeks} semanas atrás, <span class="tooltiptext">(${initialDate})<span></div>
+     teria rendido = <div class="tooltip">${changeSpan}R$${difInvest.toFixed(
+    2
+  )}</span>
+      <span class="tooltiptext">R$${resultInvest.toFixed(2)}<span></div>
      `;
 }
 
 // -----> EVENT LISTNER <-----
-btnSubmit.addEventListener("click", (e) => {
+btnSubmit.addEventListener('click', (e) => {
   e.preventDefault();
 
   //Search typed Array in Const.js to return the Object
@@ -114,8 +124,6 @@ btnSubmit.addEventListener("click", (e) => {
 
 // -----> START CODE <-----
 let randomStock = stockObj[randomStockNum(0, 417)];
-console.log("AÇAO PASSADA POR PARAMETRO:", randomStock[1]);
+console.log('AÇAO PASSADA POR PARAMETRO:', randomStock[1]);
 const resultado = requestB3(randomStock);
-console.log("Gambi");
-
-
+console.log('Gambi');

@@ -10,23 +10,42 @@
 
 <body>
 
-  <canvas id="myChart"></canvas>
 
-  <div class="slidecontainer">
-    <input type="range" min="2" max="36" value="24" class="slider" id="myRange">
-    <p>Semanas: <span id="demo"></span></p>
+  <header>
+    <div class="container">
+      <h1 id="logo">B3-bet</h1>
+      <div class="search">
+        <form class="teste">
+          <label for="stockCode">Stock Code</label>
+          <input type="text" id="stockCode">
+          <button id="btn">Search</button>
+        </form>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <div class="initial">
+      <h2>Simulador de Investimento Aleatório</h2>
+    </div>
+
+    <div class="chart-and-info">
+      <div class="displayChart">
+        <canvas id="myChart"></canvas>
+
+        <div class="slidecontainer">
+          <input type="range" min="2" max="36" value="24" class="slider" id="myRange">
+          <p>Semanas: <span id="demo"></span></p>
+        </div>
+      </div>
+      <div class="invest">
+        <h2 id="sixMonths"></h2>
+      </div>
+    </div>
   </div>
 
-  <h2>Teste API - Consulta por Ação</h2>
-  <form class="teste">
-    <label for="stockCode">Stock Code</label>
-    <input type="text" id="stockCode">
-    <button id="btn">Search</button>
-  </form>
 
-  <div class="invest">
-    <h2 id="sixMonths"></h2>
-  </div>
 
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
