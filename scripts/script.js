@@ -96,12 +96,15 @@ function calcSixMonths(lastSixMonths, stockPrice, stock) {
 
   //show result in HTML
   showSixMonths.innerHTML = `
-    ${weeks} semanas atrás(${initialDate})R$1000,00 em
+     R$1000,00  investidos em
     <div class="tooltip">${stock[0]}<span class="tooltiptext">${stock[1].slice(
     3
-  )}<span></div>,
-     teria rendido = R$${resultInvest.toFixed(2)}
-     (${changeSpan}R$${difInvest.toFixed(2)}</span>)
+  )}<span></div>
+  , há <div class="tooltip">${weeks} semanas atrás, <span class="tooltiptext">(${initialDate})<span></div>
+     teria rendido = <div class="tooltip">${changeSpan}R$${difInvest.toFixed(
+    2
+  )}</span>
+      <span class="tooltiptext">R$${resultInvest.toFixed(2)}<span></div>
      `;
 }
 
